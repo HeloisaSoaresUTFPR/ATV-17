@@ -1,3 +1,5 @@
+//: no arquivo "client.js", após recuperar todos os livros, faça requisições 
+//um-a-um para cada livro usando seu ID em /books/<ID>
 const axios = require('axios').default;
 
 
@@ -33,9 +35,24 @@ axios.post('http://localhost:3000/books',{
     console.log(erro.response.data);
 });
 
+
+
 axios.get('http://localhost:3000/books')
     .then((response) => {
         console.log(response.data);
+        buscarBook(response.data);
     });
+
+
+const buscarBook =  (lista) => {
+    lista.forEach(book => {
+        axios.get('http://localhost:3000/books/' + book.ID)
+        .then((response) => {
+            console.log(response.data);
+    
+        });
+    });
+
+}
 
 
