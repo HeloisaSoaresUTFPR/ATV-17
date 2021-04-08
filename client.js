@@ -55,6 +55,7 @@ let lista = []
         });
     });
 
+    
 await axios.get('http://localhost:3000/log')
     .then((response) => {
         console.log(response.data)
