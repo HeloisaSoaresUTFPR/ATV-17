@@ -5,6 +5,15 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Altere o arquivo "server.js" e armazene quantas requisições GET e 
+//POST foram realizadas. Em seguida, adicione um método GET
+// para "/log" que retorna os dados da quatidade de requisições.
+
+
+let contget = 0
+let contPost = 0
+
+
 const books = [
     {
         ID: 1,
@@ -19,10 +28,20 @@ const books = [
 ];
 
 app.get('/books', (req, res) => {
-    res.send(books);
+    contget++
+    res.send(books);    
+});
+
+app.get('/log', (req, res) => {
+    
+    res.send({
+        get: contget,
+        post: contPost
+    });    
 });
 
 app.post('/books', (req, res) => {
+    contPost++
     const newBook = req.body;
     if (books.findIndex(b => b.ID === newBook.ID) !== -1) {
         res.status(500).send('Existing book ID');
@@ -34,6 +53,7 @@ app.post('/books', (req, res) => {
 });
 
 app.get('/books/:bookId', (req, res) => {
+    contget++
     const bookId = parseInt(req.params.bookId);
     if (isNaN(bookId)) {
         res.status(500).send('Non integer');

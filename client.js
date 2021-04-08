@@ -2,8 +2,11 @@
 //um-a-um para cada livro usando seu ID em /books/<ID>
 const axios = require('axios').default;
 
+const requisicao = async() => {
 
-axios.post('http://localhost:3000/books', {
+
+
+await axios.post('http://localhost:3000/books', {
     ID: 3,
     name: 'My Boook',
     author: 'Me and only me'
@@ -15,7 +18,7 @@ axios.post('http://localhost:3000/books', {
         console.log(err.response.data);
     });
 
-axios.post('http://localhost:3000/books',{
+await axios.post('http://localhost:3000/books',{
     ID: 4,
     name: 'Novo Book',
     author: 'HELOISA'
@@ -25,7 +28,7 @@ axios.post('http://localhost:3000/books',{
     console.log(erro.response.data);
 });
 
-axios.post('http://localhost:3000/books',{
+await axios.post('http://localhost:3000/books',{
     ID: 1,
     name: 'Novo Book',
     author: 'Me and only mee'
@@ -35,16 +38,15 @@ axios.post('http://localhost:3000/books',{
     console.log(erro.response.data);
 });
 
+let lista = []
 
-
-axios.get('http://localhost:3000/books')
+ await axios.get('http://localhost:3000/books')
     .then((response) => {
         console.log(response.data);
-        buscarBook(response.data);
+        lista = response.data;
     });
 
 
-const buscarBook =  (lista) => {
     lista.forEach(book => {
         axios.get('http://localhost:3000/books/' + book.ID)
         .then((response) => {
@@ -53,6 +55,12 @@ const buscarBook =  (lista) => {
         });
     });
 
+await axios.get('http://localhost:3000/log')
+    .then((response) => {
+        console.log(response.data)
+    });
+
 }
 
 
+requisicao()
